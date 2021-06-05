@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 
+// This is a Yardzen app, so let's use Yardzen's branding
+import './fonts/domaine-display-web-regular.woff';
+import './fonts/apercu-regular.woff';
+
 import { BudgetItem } from './types';
 import getItems from './api/getItems';
 
 import filterDuplicates from './helpers/filterDuplicates';
 import beautifySlug from './helpers/beautifySlug';
 import beautifyPrice from './helpers/beautifyPrice';
+
+import Box from '@material-ui/core/Box';
 
 function ListBudgetItems(props: { budgetItems: BudgetItem[] }) {
   // We want to display the options from cheapest to most expensive.
@@ -34,12 +40,12 @@ function App() {
 
   const budgetItemTypes = filterDuplicates(budgetItems.map( budgetItem => budgetItem.type ));
   return (
-    <div className="App">
+    <Box className="container">
       { budgetItemTypes.map( budgetItemType => <div key={budgetItemType}>
         <h3>{beautifySlug(budgetItemType)}</h3>
         <ListBudgetItems budgetItems={budgetItems.filter(budgetItem => budgetItem.type === budgetItemType)}/>
       </div>)}
-    </div>
+    </Box>
   );
 }
 

@@ -1,0 +1,23 @@
+/* Typography */
+@font-face {
+    font-family: 'Apercu';
+    src: local('Apercu'), url("./fonts/apercu-regular.woff") format('woff');
+}
+
+@font-face {
+    font-family: 'Domaine Display';
+    src: local('Domaine Display'), url("./fonts/domaine-display-web-regular.woff") format('woff');
+}
+* {
+    font-family: "Apercu", "Inter", "Helvetica", "Arial", sans-serif;
+}
+h1,h2,h3 {
+    font-family: 'Domaine Display', serif;
+}
+
+/* Structure */
+.container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 5vh 1rem 0;
+}
