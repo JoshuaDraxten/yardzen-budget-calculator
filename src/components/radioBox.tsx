@@ -1,5 +1,4 @@
 import React, { CSSProperties, MouseEvent } from "react";
-import Box from "@material-ui/core/Box";
 
 interface RadioBoxProps {
   isSelected: Boolean;
@@ -13,19 +12,20 @@ const RadioBox: React.FC<RadioBoxProps> = ({
   children,
   style,
 }) => {
-  const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (e: MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     onClick();
   };
 
   return (
-    <Box
+    <div
+      tabIndex={0}
       className={"radio-button" + (isSelected ? " selected" : "")}
       onClick={handleClick}
       style={style}
     >
       {children}
-    </Box>
+    </div>
   );
 };
 export default RadioBox;

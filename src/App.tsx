@@ -17,8 +17,10 @@ import MultipleChoiceBudgetQuestion from "./components/multipleChoiceBudgetQuest
 import beautifyPrice from "./helpers/beautifyPrice";
 
 import ClientBudgetInput from "./components/clientBudgetInput";
+import { Button } from "@material-ui/core";
 
 function App() {
+  const [step, setStep] = useState(0);
   const [clientBudget, setClientBudget] = useState(3000000);
   const [budgetItems, setBudgetItems] = useState<BudgetItem[] | undefined>();
   const [budgetSelections, setBudgetSelections] = useState<{
@@ -56,6 +58,33 @@ function App() {
       { lowPrice: 0, highPrice: 0 }
     );
 
+  let currentStep;
+  if (step === 0) {
+    currentStep = (
+      <ClientBudgetInput value={clientBudget} onChange={setClientBudget} />
+    );
+  } else if (step < budgetItemTypes.length + 1) {
+    const budgetItemType = budgetItemTypes[step - 1];
+    currentStep = (
+      <MultipleChoiceBudgetQuestion
+        key={budgetItemType}
+        value={budgetSelections[budgetItemType]}
+        onChange={(value: BudgetItem) =>
+          updateBudgetSelection(budgetItemType, value)
+        }
+        title={beautifySlug(budgetItemType)}
+        options={budgetItems.filter(
+          (budgetItem) => budgetItem.type === budgetItemType
+        )}
+      />
+    );
+  } else {
+    currentStep = <p>That's all folks!</p>;
+  }
+
+  const showBackButton = step > 0;
+  const showNextButton = step < budgetItemTypes.length + 1;
+
   return (
     <Box className="container">
       <p>
@@ -63,21 +92,22 @@ function App() {
         {beautifyPrice(priceRange.highPrice, "compact")}
       </p>
       {clientBudget > priceRange.lowPrice ? "Within Budget" : "Over Budget!"}
-      <ClientBudgetInput value={clientBudget} onChange={setClientBudget} />
-      {budgetItemTypes.map((budgetItemType) => (
-        <Box key={budgetItemType}>
-          <MultipleChoiceBudgetQuestion
-            value={budgetSelections[budgetItemType]}
-            onChange={(value: BudgetItem) =>
-              updateBudgetSelection(budgetItemType, value)
-            }
-            title={beautifySlug(budgetItemType)}
-            options={budgetItems.filter(
-              (budgetItem) => budgetItem.type === budgetItemType
-            )}
-          />
-        </Box>
-      ))}
+      {currentStep}
+      <Box marginTop={4}>
+        {showBackButton ? (
+          <Button onClick={() => setStep((x) => x - 1)}>Back</Button>
+        ) : null}
+        {showNextButton ? (
+          <Button
+            onClick={() => setStep((x) => x + 1)}
+            variant="contained"
+            color="primary"
+            style={{ float: "right" }}
+          >
+            Next Step
+          </Button>
+        ) : null}
+      </Box>
     </Box>
   );
 }
