@@ -41,8 +41,8 @@ const MultipleChoiceBudgetQuestion: React.FC<budgetQuestionProps> = ({
           >
             <b>{budgetItem.name}</b>
             <br />
-            {beautifyPrice(budgetItem.lowPrice)}—
-            {beautifyPrice(budgetItem.highPrice)}
+            {beautifyPrice(budgetItem.lowPrice, "compact")}—
+            {beautifyPrice(budgetItem.highPrice, "compact")}
           </RadioBox>
         ))}
       </Box>

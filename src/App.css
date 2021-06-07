@@ -1,3 +1,12 @@
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  background: #f1f1f1;
+}
+
 /* Typography */
 @font-face {
   font-family: "Apercu";
@@ -19,9 +28,6 @@ h3 {
 }
 
 /* Structure */
-* {
-  box-sizing: border-box;
-}
 .container {
   max-width: 600px;
   margin: 0 auto;

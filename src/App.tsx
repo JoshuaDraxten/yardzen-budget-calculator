@@ -12,19 +12,21 @@ import filterDuplicates from "./helpers/filterDuplicates";
 import beautifySlug from "./helpers/beautifySlug";
 
 import Box from "@material-ui/core/Box";
+
 import MultipleChoiceBudgetQuestion from "./components/multipleChoiceBudgetQuestion";
 import beautifyPrice from "./helpers/beautifyPrice";
 
+import ClientBudgetInput from "./components/clientBudgetInput";
+
 function App() {
+  const [clientBudget, setClientBudget] = useState(3000000);
   const [budgetItems, setBudgetItems] = useState<BudgetItem[] | undefined>();
   const [budgetSelections, setBudgetSelections] = useState<{
     [key: string]: BudgetItem;
   }>({});
 
   useEffect(function () {
-    getBudgetItems().then(function (budgetItems) {
-      setBudgetItems(budgetItems);
-    });
+    getBudgetItems().then(setBudgetItems);
   }, []);
 
   if (budgetItems === undefined) return <p>loading...</p>;
@@ -57,9 +59,11 @@ function App() {
   return (
     <Box className="container">
       <p>
-        Price Range: {beautifyPrice(priceRange.lowPrice)}—
-        {beautifyPrice(priceRange.highPrice)}
+        Price Range: {beautifyPrice(priceRange.lowPrice, "compact")}—
+        {beautifyPrice(priceRange.highPrice, "compact")}
       </p>
+      {clientBudget > priceRange.lowPrice ? "Within Budget" : "Over Budget!"}
+      <ClientBudgetInput value={clientBudget} onChange={setClientBudget} />
       {budgetItemTypes.map((budgetItemType) => (
         <Box key={budgetItemType}>
           <MultipleChoiceBudgetQuestion
