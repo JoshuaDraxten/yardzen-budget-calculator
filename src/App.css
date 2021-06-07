@@ -1,23 +1,60 @@
 /* Typography */
 @font-face {
-    font-family: 'Apercu';
-    src: local('Apercu'), url("./fonts/apercu-regular.woff") format('woff');
+  font-family: "Apercu";
+  src: local("Apercu"), url("./fonts/apercu-regular.woff") format("woff");
 }
 
 @font-face {
-    font-family: 'Domaine Display';
-    src: local('Domaine Display'), url("./fonts/domaine-display-web-regular.woff") format('woff');
+  font-family: "Domaine Display";
+  src: local("Domaine Display"),
+    url("./fonts/domaine-display-web-regular.woff") format("woff");
 }
 * {
-    font-family: "Apercu", "Inter", "Helvetica", "Arial", sans-serif;
+  font-family: "Apercu", "Inter", "Helvetica", "Arial", sans-serif;
 }
-h1,h2,h3 {
-    font-family: 'Domaine Display', serif;
+h1,
+h2,
+h3 {
+  font-family: "Domaine Display", serif;
 }
 
 /* Structure */
+* {
+  box-sizing: border-box;
+}
 .container {
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 5vh 1rem 0;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 5vh 1rem 0;
+}
+
+/* multipleChoiceBudgetQuestion */
+.budget-question-box {
+  display: flex;
+  width: 100%;
+  gap: 8px;
+  flex-direction: row;
+}
+.budget-question-box > div {
+  flex: 1;
+}
+@media screen and (min-width: 600px) {
+  .budget-question-box > div {
+    max-width: calc(33% - 4px);
+  }
+}
+
+/* radioBox */
+.radio-button {
+  background: #fff;
+  user-select: none;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 8px 12px;
+  border: 1px solid rgb(172, 184, 172);
+  transition: background-color 150ms ease 0s;
+}
+.radio-button.selected,
+.radio-button:hover {
+  background: rgb(226, 235, 226);
 }
