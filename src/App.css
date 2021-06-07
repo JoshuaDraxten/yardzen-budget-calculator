@@ -29,7 +29,6 @@ h3 {
 
 /* Structure */
 .container {
-  /* background: red; */
   position: absolute;
   width: 100%;
   max-width: 600px;
@@ -68,4 +67,19 @@ h3 {
 .radio-button.selected,
 .radio-button:hover {
   background: rgb(226, 235, 226);
+}
+
+/* Mui Form Elements */
+/* I know this is not the way I'm supposed to customize the colors
+I havent messed around with Mui's correct way to go about this though
+so this is my quick and dirty styling ☺️ */
+.MuiButton-containedPrimary {
+  background-color: rgb(172, 184, 172) !important;
+  color: #000 !important;
+}
+.MuiButton-containedPrimary:hover {
+  background-color: rgb(151, 166, 151) !important;
+}
+.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: rgb(172, 184, 172) !important;
 }

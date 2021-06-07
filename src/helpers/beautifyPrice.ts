@@ -1,4 +1,3 @@
-// $6M – $10M is much easier to read than $6,000,000 – $10,000,000
 export default function beautifyPrice(price: number, notation: string) {
   // Detect locale to display the currencly unambiguously as USD
   let locale = "en-US";

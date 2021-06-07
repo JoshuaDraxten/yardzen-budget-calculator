@@ -12,17 +12,18 @@ import filterDuplicates from "./helpers/filterDuplicates";
 import beautifySlug from "./helpers/beautifySlug";
 
 import Box from "@material-ui/core/Box";
-
 import MultipleChoiceBudgetQuestion from "./components/multipleChoiceBudgetQuestion";
 import beautifyPrice from "./helpers/beautifyPrice";
-
 import ClientBudgetInput from "./components/clientBudgetInput";
 import { Button } from "@material-ui/core";
 
 function App() {
-  const [step, setStep] = useState(0);
   const [clientBudget, setClientBudget] = useState(3000000);
   const [budgetItems, setBudgetItems] = useState<BudgetItem[] | undefined>();
+  // Which step of the questions the user is on
+  const [step, setStep] = useState(0);
+
+  // The budgetItems that the user has selected for each item type
   const [budgetSelections, setBudgetSelections] = useState<{
     [key: string]: BudgetItem;
   }>({});
@@ -33,17 +34,12 @@ function App() {
 
   if (budgetItems === undefined) return <p>loading...</p>;
 
+  // In order to group the BudgetItems by type, we need to know the types
   const budgetItemTypes = filterDuplicates(
     budgetItems.map((budgetItem) => budgetItem.type)
   );
 
-  const updateBudgetSelection = (budgetItemType: string, value: BudgetItem) => {
-    setBudgetSelections((budgetSelections) => ({
-      ...budgetSelections,
-      [budgetItemType]: value,
-    }));
-  };
-
+  // Get the pricerange
   const priceRange = budgetItemTypes
     // Get an array of all selected budget items
     .map((type) => budgetSelections[type])
@@ -79,23 +75,53 @@ function App() {
       />
     );
   } else {
-    currentStep = <p>That's all folks!</p>;
+    // The last step
+    currentStep = (
+      <h2 style={{ textAlign: "center", lineHeight: 10 }}>
+        {clientBudget > priceRange.lowPrice
+          ? "Nice! You're Within Budget!"
+          : "Oh no! You're Over Budget 😭"}
+      </h2>
+    );
   }
+
+  const updateBudgetSelection = (budgetItemType: string, value: BudgetItem) => {
+    setBudgetSelections((budgetSelections) => ({
+      ...budgetSelections,
+      [budgetItemType]: value,
+    }));
+  };
 
   const showBackButton = step > 0;
   const showNextButton = step < budgetItemTypes.length + 1;
 
   return (
     <Box className="container">
-      <p>
-        Price Range: {beautifyPrice(priceRange.lowPrice, "compact")}—
-        {beautifyPrice(priceRange.highPrice, "compact")}
-      </p>
-      {clientBudget > priceRange.lowPrice ? "Within Budget" : "Over Budget!"}
+      <div style={{ marginBottom: 32 }}>
+        <span>
+          {step + 1}/<b>{budgetItemTypes.length + 2}</b>
+        </span>
+        {step !== 0 ? (
+          <div style={{ float: "right" }}>
+            Budget: {beautifyPrice(clientBudget, "compact")} &nbsp;|&nbsp; Total
+            Range:{" "}
+            <span
+              style={{
+                color: clientBudget > priceRange.lowPrice ? "inherit" : "red",
+              }}
+            >
+              {beautifyPrice(priceRange.lowPrice, "compact")}-
+              {beautifyPrice(priceRange.highPrice, "compact")}
+            </span>
+          </div>
+        ) : null}
+      </div>
       {currentStep}
       <Box marginTop={4}>
         {showBackButton ? (
-          <Button onClick={() => setStep((x) => x - 1)}>Back</Button>
+          <Button onClick={() => setStep((x) => x - 1)} size="large">
+            Back
+          </Button>
         ) : null}
         {showNextButton ? (
           <Button
@@ -103,6 +129,7 @@ function App() {
             variant="contained"
             color="primary"
             style={{ float: "right" }}
+            size="large"
           >
             Next Step
           </Button>

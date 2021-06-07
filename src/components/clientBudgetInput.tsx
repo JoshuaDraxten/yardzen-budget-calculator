@@ -1,4 +1,4 @@
-import { TextField } from "@material-ui/core";
+import { Box, TextField } from "@material-ui/core";
 import React from "react";
 import beautifyPrice from "../helpers/beautifyPrice";
 
@@ -12,8 +12,8 @@ const ClientBudgetInput: React.FC<clientBudgetInputProps> = ({
   onChange,
 }) => {
   return (
-    <>
-      <h2>What's Your Budget?</h2>
+    <Box marginY={10}>
+      <h2>Hello! What's the Budget for your Project?</h2>
       <TextField
         variant="outlined"
         value={beautifyPrice(value, "standard")}
@@ -28,7 +28,7 @@ const ClientBudgetInput: React.FC<clientBudgetInputProps> = ({
         }}
         style={{ background: "#ffffff" }}
       />
-    </>
+    </Box>
   );
 };
 

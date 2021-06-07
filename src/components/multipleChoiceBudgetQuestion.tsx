@@ -27,8 +27,9 @@ const MultipleChoiceBudgetQuestion: React.FC<budgetQuestionProps> = ({
   });
 
   return (
-    <Box>
-      <h2>{title}</h2>
+    <Box marginY={8}>
+      <span>Select your preference of:</span>
+      <h2 style={{ fontSize: "32px", marginTop: 4 }}>{title}</h2>
       <Box className="budget-question-box">
         {options.map((budgetItem) => (
           <RadioBox
@@ -40,9 +41,10 @@ const MultipleChoiceBudgetQuestion: React.FC<budgetQuestionProps> = ({
             }
           >
             <b>{budgetItem.name}</b>
-            <br />
-            {beautifyPrice(budgetItem.lowPrice, "compact")}—
-            {beautifyPrice(budgetItem.highPrice, "compact")}
+            <div style={{ marginTop: 8 }}>
+              {beautifyPrice(budgetItem.lowPrice, "compact")}—
+              {beautifyPrice(budgetItem.highPrice, "compact")}
+            </div>
           </RadioBox>
         ))}
       </Box>
