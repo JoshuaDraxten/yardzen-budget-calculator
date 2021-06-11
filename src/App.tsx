@@ -13,8 +13,8 @@ import beautifySlug from "./helpers/beautifySlug";
 
 import Box from "@material-ui/core/Box";
 import MultipleChoiceBudgetQuestion from "./components/multipleChoiceBudgetQuestion";
-import beautifyPrice from "./helpers/beautifyPrice";
 import ClientBudgetInput from "./components/clientBudgetInput";
+import AppHeader from "./components/AppHeader";
 import { Button } from "@material-ui/core";
 
 function App() {
@@ -97,25 +97,12 @@ function App() {
 
   return (
     <Box className="container">
-      <div style={{ marginBottom: 32 }}>
-        <span>
-          {step + 1}/<b>{budgetItemTypes.length + 2}</b>
-        </span>
-        {step !== 0 ? (
-          <div style={{ float: "right" }}>
-            Budget: {beautifyPrice(clientBudget, "compact")} &nbsp;|&nbsp; Total
-            Range:{" "}
-            <span
-              style={{
-                color: clientBudget > priceRange.lowPrice ? "inherit" : "red",
-              }}
-            >
-              {beautifyPrice(priceRange.lowPrice, "compact")}-
-              {beautifyPrice(priceRange.highPrice, "compact")}
-            </span>
-          </div>
-        ) : null}
-      </div>
+      <AppHeader
+        step={step}
+        totalSteps={budgetItemTypes.length + 2}
+        clientBudget={clientBudget}
+        priceRange={priceRange}
+      />
       {currentStep}
       <Box marginTop={4}>
         {showBackButton ? (
