@@ -1,5 +1,5 @@
 export default function beautifyPrice(price: number, notation: string) {
-  // Detect locale to display the currencly unambiguously as USD
+  // Detect locale to display the currency unambiguously as USD
   let locale = "en-US";
   if (navigator.languages) {
     locale = navigator.languages[0];

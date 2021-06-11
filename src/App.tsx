@@ -15,7 +15,7 @@ import Box from "@material-ui/core/Box";
 import MultipleChoiceBudgetQuestion from "./components/multipleChoiceBudgetQuestion";
 import ClientBudgetInput from "./components/clientBudgetInput";
 import AppHeader from "./components/AppHeader";
-import { Button } from "@material-ui/core";
+import AppFooter from "./components/AppFooter";
 
 function App() {
   const [clientBudget, setClientBudget] = useState(3000000);
@@ -92,36 +92,23 @@ function App() {
     }));
   };
 
-  const showBackButton = step > 0;
-  const showNextButton = step < budgetItemTypes.length + 1;
+  const totalSteps = budgetItemTypes.length + 2;
 
   return (
     <Box className="container">
       <AppHeader
         step={step}
-        totalSteps={budgetItemTypes.length + 2}
+        totalSteps={totalSteps}
         clientBudget={clientBudget}
         priceRange={priceRange}
       />
       {currentStep}
-      <Box marginTop={4}>
-        {showBackButton ? (
-          <Button onClick={() => setStep((x) => x - 1)} size="large">
-            Back
-          </Button>
-        ) : null}
-        {showNextButton ? (
-          <Button
-            onClick={() => setStep((x) => x + 1)}
-            variant="contained"
-            color="primary"
-            style={{ float: "right" }}
-            size="large"
-          >
-            Next Step
-          </Button>
-        ) : null}
-      </Box>
+      <AppFooter
+        step={step}
+        totalSteps={totalSteps}
+        prevStep={() => setStep((x) => x - 1)}
+        nextStep={() => setStep((x) => x + 1)}
+      />
     </Box>
   );
 }
