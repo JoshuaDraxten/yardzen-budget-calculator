@@ -1,4 +1,6 @@
-export default function beautifyPrice(price: number, notation: string) {
+import memoizee from "memoizee";
+
+function beautifyPrice(price: number, notation: string) {
   // Detect locale to display the currency unambiguously as USD
   let locale = "en-US";
   if (navigator.languages) {
@@ -11,3 +13,5 @@ export default function beautifyPrice(price: number, notation: string) {
     notation,
   }).format(price / 100);
 }
+
+export default memoizee(beautifyPrice);
